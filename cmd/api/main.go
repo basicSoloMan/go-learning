@@ -1,14 +1,21 @@
 package main
 
-import "log"
+import (
+	"go-learning/internal/env"
+	store2 "go-learning/internal/store"
+	"log"
+)
 
 func main() {
 	cfg := config{
-		addr: "localhost:8080",
+		addr: env.GetString("ADDR", "localhost:8080"),
 	}
+
+	store := store2.NewStorage(nil)
 
 	app := &application{
 		config: cfg,
+		store:  store,
 	}
 
 	mux := app.mount()
